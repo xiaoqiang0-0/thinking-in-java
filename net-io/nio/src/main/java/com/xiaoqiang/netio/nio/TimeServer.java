@@ -18,8 +18,6 @@ public class TimeServer {
     public static final String TIME_TEMPLATE = "yyyy-MM-dd HH:mm:ss";
 
 
-    private final ServerSocket serverSocket;
-
     private final ServerSocketChannel channel;
     private final Selector selector;
 
@@ -29,8 +27,7 @@ public class TimeServer {
 
     public TimeServer(int port) throws IOException {
         channel = ServerSocketChannel.open();
-        serverSocket = channel.socket();
-        serverSocket.bind(new InetSocketAddress(port));
+        channel.bind(new InetSocketAddress(port));
         selector = Selector.open();
     }
 
@@ -82,7 +79,7 @@ public class TimeServer {
                 break;
             }
         }
-        System.out.printf("%10s%10s 写入: %10s。\n", time, address, time);
+        System.out.printf("%s%20s 写入: %10s。\n", time, address, time);
         clientChannel.close();
     }
 
@@ -91,7 +88,7 @@ public class TimeServer {
         SocketChannel clientChannel = channel.accept();
         SocketAddress address = clientChannel.getRemoteAddress();
         //read op
-        System.out.printf("%10s%10s 收到: %s。\n", new SimpleDateFormat(TIME_TEMPLATE).format(new Date()), address, new SimpleDateFormat(TIME_TEMPLATE).format(new Date()));
+        System.out.printf("%s%20s 收到: %s。\n", new SimpleDateFormat(TIME_TEMPLATE).format(new Date()), address, new SimpleDateFormat(TIME_TEMPLATE).format(new Date()));
         clientChannel.close();
     }
 
@@ -105,7 +102,6 @@ public class TimeServer {
     public void close() throws IOException {
         channel.close();
         selector.close();
-        serverSocket.close();
     }
 
     public static void main(String[] args) throws IOException, InterruptedException {

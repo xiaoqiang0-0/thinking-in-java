@@ -12,6 +12,7 @@
         <module>concurrency-practice</module>
         <module>understanding-jvm</module>
         <module>async</module>
+        <module>net-io</module>
     </modules>
 
     <dependencies>

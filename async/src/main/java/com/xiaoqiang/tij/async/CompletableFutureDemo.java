@@ -4,7 +4,7 @@ import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.ExecutionException;
 
 public class CompletableFutureDemo {
-    public static void main(String[] args){
+    public static void main(String[] args) {
         combine();
         exceptionHandler();
     }
@@ -12,7 +12,7 @@ public class CompletableFutureDemo {
     /**
      * 合并两个异步操作的结果
      */
-    public static void combine(){
+    public static void combine() {
         String result = CompletableFuture.supplyAsync(() -> {
             try {
                 Thread.sleep(100);
@@ -33,20 +33,12 @@ public class CompletableFutureDemo {
 
     /**
      * 异常处理
-     * @throws ExecutionException
-     * @throws InterruptedException
      */
     public static void exceptionHandler() {
-        CompletableFuture<?> future = CompletableFuture.supplyAsync(()->Integer.parseInt("ILLEGAL"))
+        CompletableFuture<String> future = CompletableFuture.supplyAsync(() -> Integer.parseInt("ILLEGAL"))
                 .thenApply(r -> r * 2 * Math.PI)
                 .thenApply(s -> "apply>> " + s)
                 .exceptionally(ex -> "Error: " + ex.getMessage());
-        try {
-            System.out.println(future.get());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
+        System.out.println(future.join());
     }
 }

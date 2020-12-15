@@ -1,7 +1,6 @@
 package com.xiaoqiang.tij.async;
 
 import java.util.concurrent.CompletableFuture;
-import java.util.concurrent.ExecutionException;
 
 public class CompletableFutureDemo {
     public static void main(String[] args) {
